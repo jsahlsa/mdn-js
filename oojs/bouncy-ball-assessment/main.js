@@ -41,6 +41,7 @@ function EvilCircle(x, y, velX, velY, exists) {
     this.size = 10;
 }
 
+// Ball methods:
 // method for drawing the balls
 Ball.prototype.draw = function () {
     ctx.beginPath();
@@ -84,6 +85,14 @@ Ball.prototype.collisionDetect = function () {
             }
         }
     }
+}
+
+EvilCircle.prototype.draw = function () {
+    ctx.beginPath();
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = 3;
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.stroke();
 }
 
 // builds balls 
