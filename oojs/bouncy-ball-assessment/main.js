@@ -32,6 +32,15 @@ function Ball(x, y, velX, velY, exists, color, size) {
     this.size = size;
 }
 
+// EvilCircle constructor
+
+function EvilCircle(x, y, velX, velY, exists) {
+    Shape.call(this, x, y, 20, 20, exists);
+
+    this.color = 'white';
+    this.size = 10;
+}
+
 // method for drawing the balls
 Ball.prototype.draw = function () {
     ctx.beginPath();
