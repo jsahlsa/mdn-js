@@ -54,6 +54,7 @@ Ball.prototype.draw = function () {
 Ball.prototype.update = function () {
     if ((this.x + this.size) >= width) {
         this.velX = -(this.velX);
+        // for EvilCircle: this.x = width - this.size;
     }
     if ((this.x - this.size) <= 0) {
         this.velX = -(this.velX);
@@ -87,12 +88,31 @@ Ball.prototype.collisionDetect = function () {
     }
 }
 
+// EvilCircle methods:
+// draw method
+
 EvilCircle.prototype.draw = function () {
     ctx.beginPath();
     ctx.strokeStyle = this.color;
     ctx.lineWidth = 3;
     ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
     ctx.stroke();
+}
+
+EvilCircle.prototype.checkBounds = function () {
+    if ((this.x + this.size) >= width) {
+        this.x = width - this.size;
+        // for EvilCircle: this.x = width - this.size;
+    }
+    if ((this.x - this.size) <= 0) {
+        this.x = width + this.size;
+    }
+    if ((this.y + this.size) >= height) {
+        this.y = height - this.size;
+    }
+    if ((this.y - this.size) <= 0) {
+        this.y = height + this.size;
+    }
 }
 
 // builds balls 
