@@ -156,13 +156,15 @@ EvilCircle.prototype.collisionDetect = function () {
             if (distance < this.size + balls[j].size) {
                 // might need to fix this part
                 balls[j].exists = false;
+                count--;
+                para.textContent = 'Balls left: ' + count;
             }
         }
     }
 }
 
 // builds balls 
-const numberOfBalls = 30;
+// const numberOfBalls = 30;
 
 let balls = [];
 
