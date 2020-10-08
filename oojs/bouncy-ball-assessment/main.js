@@ -1,3 +1,6 @@
+const para = document.querySelector('p');
+let count = 0;
+
 // setup canvas
 
 const canvas = document.querySelector('canvas');
@@ -32,14 +35,22 @@ function Ball(x, y, velX, velY, exists, color, size) {
     this.size = size;
 }
 
+Ball.prototype = Object.create(Shape.prototype);
+Ball.prototype.constructor = Ball;
+
+
 // EvilCircle constructor
 
-function EvilCircle(x, y, velX, velY, exists) {
+function EvilCircle(x, y, exists) {
     Shape.call(this, x, y, 20, 20, exists);
 
     this.color = 'white';
     this.size = 10;
 }
+
+EvilCircle.prototype = Object.create(Shape.prototype);
+EvilCircle.prototype.constructor = EvilCircle;
+
 
 // Ball methods:
 // method for drawing the balls
@@ -105,13 +116,13 @@ EvilCircle.prototype.checkBounds = function () {
         // for EvilCircle: this.x = width - this.size;
     }
     if ((this.x - this.size) <= 0) {
-        this.x = width + this.size;
+        this.x = 0 + this.size;
     }
     if ((this.y + this.size) >= height) {
         this.y = height - this.size;
     }
     if ((this.y - this.size) <= 0) {
-        this.y = height + this.size;
+        this.y = 0 + this.size;
     }
 }
 
@@ -137,14 +148,13 @@ EvilCircle.prototype.setControls = function () {
 
 EvilCircle.prototype.collisionDetect = function () {
     for (let j = 0; j < balls.length; j++) {
-        if (balls[j].exists = true) {
+        if (balls[j].exists) {
             const dx = this.x - balls[j].x;
             const dy = this.y - balls[j].y;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < this.size + balls[j].size) {
                 // might need to fix this part
-                balls.splice(j, 1);
                 balls[j].exists = false;
             }
         }
@@ -156,7 +166,7 @@ const numberOfBalls = 30;
 
 let balls = [];
 
-while (balls.length < numberOfBalls) {
+while (balls.length < 25) {
     let size = random(10, 20);
     let ball = new Ball(
         random(0 + size, width - size),
@@ -169,17 +179,40 @@ while (balls.length < numberOfBalls) {
     );
 
     balls.push(ball);
+    count++;
+    para.textContent = 'Balls left: ' + count;
 }
+
+let evilCircle = new EvilCircle(
+    random(0 + 10, width - 10),
+    random(0 + 10, height - 10),
+    true
+);
+
+evilCircle.setControls();
+
+
 
 function loop() {
     ctx.fillStyle = 'rgb(0, 0, 0, 0.5)';
     ctx.fillRect(0, 0, width, height);
+    // evilCircle.setControls();
 
     for (let i = 0; i < balls.length; i++) {
-        balls[i].draw();
-        balls[i].update();
-        balls[i].collisionDetect();
+
+        // only draw if exists = true
+        if (balls[i].exists) {
+            balls[i].draw();
+            balls[i].update();
+            balls[i].collisionDetect();
+        }
+
+
     }
+
+    evilCircle.draw();
+    evilCircle.checkBounds();
+    evilCircle.collisionDetect();
 
     requestAnimationFrame(loop);
 }
