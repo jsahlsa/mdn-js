@@ -133,6 +133,24 @@ EvilCircle.prototype.setControls = function () {
     }
 }
 
+// EvilCirle collisionDetect method
+
+EvilCircle.prototype.collisionDetect = function () {
+    for (let j = 0; j < balls.length; j++) {
+        if (balls[j].exists = true) {
+            const dx = this.x - balls[j].x;
+            const dy = this.y - balls[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < this.size + balls[j].size) {
+                // might need to fix this part
+                balls.splice(j, 1);
+                balls[j].exists = false;
+            }
+        }
+    }
+}
+
 // builds balls 
 const numberOfBalls = 30;
 
