@@ -10,6 +10,8 @@ btn.onclick = function () {
     const span = document.createElement('span');
     const button = document.createElement('button');
 
+    // button.style.padding = '20px';
+
     li.appendChild(span);
     span.textContent = myItem;
     li.appendChild(button);
