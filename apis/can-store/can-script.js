@@ -162,6 +162,10 @@ function initialize() {
         }
     }
 
+    // fetchBlob uses XMLHTTPRequest to retrieve the image for that product, and then sends the
+    // resulting image display URL and product object on to showProduct() to finally
+    // display it
+
     function fetchBlob(product) {
         var url = 'images/' + product.image;
         let request = new XMLHttpRequest();
